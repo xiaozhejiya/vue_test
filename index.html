@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        .router-link-exact-active {
+            color: white;
+            background-color: green;
+        }
+    </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router@3.5.1/dist/vue-router.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<body>
+    <div id="app">
+        <div><input type="text" v-model="currentTime" readonly></div>
+        <div style="display: flex;align-items: center;justify-content:space-between">
+            <span title="把时间改成YYYY-MM-DD HH:MM:SS格式得5分">当前时间：{{currentTime}}</span>
+            <span title="根据时间读取对应的课程、教师、班级的10分">当前课程：{{currentCourse}}</span>
+            <span title="根据时间读取对应的课程、教师、班级的10分">当前教师：{{currentTeacher}}</span>
+            <span title="根据时间读取对应的课程、教师、班级的10分">当前班级：{{currentClass}}</span>
+        </div>
+        <keep-alive include="Home">
+            <router-view></router-view>
+        </keep-alive>
+    </div>
+
+    <template id="daohangTemp">
+        <div style="display: flex;align-items: center;justify-content:space-between">
+            <router-link to="/">同学列表(20分)</router-link>
+            <router-link to="/about">座位(20分)</router-link>
+            <router-link to="/person">抽奖(45分)</router-link>
+        </div>
+    </template>
+
+    <!----定义一些组件-->
+    <template id="HomeTemp">
+        <div>
+            <daohang></daohang>
+            <div id="stulist">
+                <h3>学生列表</h3>
+                <ul>
+                    <li v-for="student in studentList" >{{ student.name }}</li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <template id="AboutTemp">
+        <div>
+            <daohang></daohang>
+            <br>
+            <div id="seatlist">
+                <h3>座位列表</h3>
+                <ul>
+                    <li v-for="seat in seatList">{{ seat }}</li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <template id="PersonTemp">
+        <div>
+            <daohang></daohang>
+            <br>
+            <div>
+                <button @click="startCycling">开始</button>
+                <ul>
+                    <li v-for="(student, index) in studentList" :style="{ backgroundColor: currentActiveIndex === index ? 'green' : 'transparent' }">{{ student.name }}</li>
+                </ul>
+                <button @click="stopCycling">停止</button>
+            </div>
+        </div>
+    </template>
+
+</body>
+<script>
+    var daoHang = Vue.component('daohang', { template: '#daohangTemp' });
+
+    var Home = Vue.component('Home', {
+        template: '#HomeTemp',
+        data: function () {
+            return {
+                studentList: []
+            };
+        },
+        methods: {
+            async updateStudentList() {
+                const className = this.$root.currentClass;
+                if (className !== "无") {
+                    const studentList = await getStudentList(className);
+                    this.studentList = studentList;
+                }
+            }
+        },
+        mounted: function () {
+            console.log("Home组件被加载了");
+            // 每秒更新学生列表
+            this.timer = setInterval(() => {
+                this.updateStudentList();
+            }, 200);
+        },
+        beforeDestroy() {
+            clearInterval(this.timer);
+        }
+    });
+
+    var About = Vue.component('About', {
+        template: '#AboutTemp',
+        data: function () {
+            return {
+                seatList: []
+            };
+        },
+        methods: {
+            async updateSeatList() {
+                const className = this.$root.currentClass;
+                if (className !== "无") {
+                    const seatList = await getStudentSeat(className);
+                    this.seatList = seatList;
+                }
+            }
+        },
+        mounted: function () {
+            console.log("About组件被加载了");
+            // 每秒更新座位信息
+            this.timer = setInterval(() => {
+                this.updateSeatList();
+            }, 200);
+        },
+        beforeDestroy() {
+            clearInterval(this.timer);
+        }
+    });
+
+    var Person = Vue.component('Person', {
+        template: '#PersonTemp',
+        data: function () {
+            return {
+                studentList: [],
+                currentActiveIndex: 0,
+                cyclingInterval: null
+            };
+        },
+        methods: {
+            async fetchStudentList() {
+                const className = this.$root.currentClass;
+                if (className !== "无") {
+                    const studentList = await getStudentList(className);
+                    this.studentList = studentList;
+                }
+            },
+            startCycling() {
+                if (this.cyclingInterval) {
+                    clearInterval(this.cyclingInterval);
+                }
+                this.cyclingInterval = setInterval(() => {
+                    this.currentActiveIndex = (this.currentActiveIndex + 1) % this.studentList.length;
+                }, 50);
+            },
+            stopCycling() {
+                if (this.cyclingInterval) {
+                    setTimeout(() => {
+                        // 停止轮换背景色
+                        clearInterval(this.cyclingInterval);
+                    }, 3000);
+                }
+            }
+        },
+        mounted: function () {
+            this.timer = setInterval(() => {
+                this.fetchStudentList();  
+            }, 200);
+        },
+
+        beforeDestroy() {
+            clearInterval(this.cyclingInterval);
+        }
+    });
+
+    // 创建 router 实例
+    var router = new VueRouter({
+        routes: [
+            { path: '/', component: Home },
+            { path: '/about', component: About },
+            { path: "/person", component: Person }
+        ]
+    });
+
+    // 创建和挂载根实例
+    new Vue({
+        el: '#app',
+        router, // 使用 router 插件
+        data: {
+            currentTime: getFormattedDate(),
+            currentCourse: "无",
+            currentClass: "无",
+            currentTeacher: "无"
+        },
+        mounted() {
+            // 每秒更新 currentTime 和课程信息
+            this.timer = setInterval(() => {
+                this.currentTime = getFormattedDate();
+                this.updateCourseInfo();
+            }, 1000);
+        },
+        beforeDestroy() {
+            // 销毁前清除定时器
+            clearInterval(this.timer);
+        },
+        methods: {
+            async updateCourseInfo() {
+                try {
+                    const now = new Date();
+                    const day = now.getDay();
+                    const currentStage = this.getCurrentStage(now);
+
+                    if (currentStage) {
+                        const courseInfo = await getCurrentCourseInfo(day, currentStage);
+                        this.currentCourse = courseInfo[0];
+                        this.currentTeacher = courseInfo[1];
+                        this.currentClass = courseInfo[2];
+                    }
+                } catch (error) {
+                    console.error("获取课程信息失败", error);
+                }
+            },
+            getCurrentStage(now) {
+                const stages = {
+                    "8:40-10:00": "1-2",
+                    "10:20-11:40": "3-4",
+                    "13:30-14:50": "5-6",
+                    "15:10-16:30": "7-8",
+                };
+                for (const [timeRange, stage] of Object.entries(stages)) {
+                    const [startTime, endTime] = timeRange.split('-');
+                    const start = new Date(now);
+                    const [startHours, startMinutes] = startTime.split(':');
+                    start.setHours(parseInt(startHours), parseInt(startMinutes), 0, 0);
+                    const end = new Date(now);
+                    const [endHours, endMinutes] = endTime.split(':');
+                    end.setHours(parseInt(endHours), parseInt(endMinutes), 0, 0);
+                    if (now >= start && now <= end) {
+                        return stage;
+                    }
+                }
+                return null;
+            }
+        }
+    });
+
+    function getFormattedDate() {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始，所以需要+1
+        const day = date.getDate().toString().padStart(2, '0');
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    const days = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+    const stage_to_index = {
+        "1-2": 0,
+        "3-4": 1,
+        "5-6": 2,
+        "7-8": 3
+    };
+
+    async function getCurrentCourseInfo(day, currentStage) {
+        const response = await fetch('./json/kebiao.json');
+        if (!response.ok) {
+            throw new Error('网络响应不正常');
+        }
+        const data = await response.json();
+        const course = data[days[day - 1]][stage_to_index[currentStage]][currentStage];
+        const stu_class = data[days[day - 1]][stage_to_index[currentStage]]["className"];
+        const teacher = data[days[day - 1]][stage_to_index[currentStage]]["teacherName"];
+        return [course, teacher, stu_class];
+    }
+
+    async function getStudentList(className) {
+        const response = await fetch('./json/class.json');
+        if (!response.ok) {
+            throw new Error('网络响应不正常');
+        }
+        const data = await response.json();
+        for (let i = 0; i < data.length; i++) {
+            if (className == data[i]["className"]) {
+                return data[i]["studentList"];
+            }
+        }
+        return [];
+    }
+
+    async function getStudentSeat(className) {
+        const response = await fetch('./json/zuowei.json');
+        if (!response.ok) {
+            throw new Error('网络响应不正常');
+        }
+        const data = await response.json();
+        for (let i = 0; i < data.length; i++) {
+            if (className == data[i]["className"]) {
+                return data[i]["position"];
+            }
+        }
+        return [];
+    }
+</script>
+
+</html>

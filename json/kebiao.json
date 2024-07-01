@@ -1,0 +1,29 @@
+{
+    "monday":[
+        {"1-2":"云计算","className":"2022大数据应用技术G5","teacherName":"申冀特"},
+        {"3-4":"前端开发实战","className":"2022大数据应用技术G5","teacherName":"申冀特"},
+        {"5-6":"其他课A","className":"其他班A","teacherName":"左海威"},
+        {"7-8":"其他课B","className":"其他班B"}
+    ],
+    "tuesday":[
+        {"1-2":"其他课C","className":"其他班C","teacherName":"朱艳萍"},
+        {"3-4":"其他课C","className":"其他班C","teacherName":"朱艳萍"},
+        {"5-6":"其他课C","className":"其他班C","teacherName":"朱艳萍"},
+        {"7-8":"其他课C","className":"其他班C","teacherName":"朱艳萍"}
+    ],
+    "wendesday":[
+        {"1-2":"Hadoop基础","className":"2022大数据应用技术G5","teacherName":"左海威"},
+        {"3-4":"其他课A","className":"其他班A","teacherName":"左海威"},
+        {"5-6":"其他课A","className":"其他班A","teacherName":"左海威"},
+        {"7-8":"其他课A","className":"其他班A","teacherName":"左海威"}
+    ],
+    "thursday":[
+        {"1-2":"其他课B","className":"其他班B","teacherName":"张明明"},
+        {"3-4":"其他课B","className":"其他班B","teacherName":"张明明"},
+        {"5-6":"其他课B","className":"其他班B","teacherName":"张明明"},
+        {"7-8":"其他课B","className":"其他班B","teacherName":"张明明"}
+    ],
+    "friday":[
+        {"1-2":"前端开发实战","className":"2022大数据应用技术G5","teacherName":"申冀特"}
+    ]
+}

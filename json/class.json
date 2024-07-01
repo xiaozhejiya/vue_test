@@ -1,0 +1,166 @@
+[
+    {
+        "className": "2022大数据应用技术G5",
+        "studentList": [
+            {
+                "number": 2,
+                "bigNumber": "2022400245",
+                "name": "许烨",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/liuzheng.jpg"
+            },
+            {
+                "number": 1,
+                "bigNumber": "2022400245",
+                "name": "刘政",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/10.1.25.198_01刘政.jpg"
+            },
+            {
+                "number": 3,
+                "bigNumber": "2022400245",
+                "name": "刘琰萱",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/10.1.25.38_chr.jpg"
+            }
+        ]
+    },
+    {
+        "className": "其他班A",
+        "studentList": [
+            {
+                "number": 2,
+                "bigNumber": "2022401001",
+                "name": "张三",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/liuzheng.jpg"
+            },
+            {
+                "number": 1,
+                "bigNumber": "2022401002",
+                "name": "李四",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/10.1.25.198_01刘政.jpg"
+            },
+            {
+                "number": 3,
+                "bigNumber": "20224040003",
+                "name": "王五",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/10.1.25.38_chr.jpg"
+            }
+        ]
+    },
+    {
+        "className": "其他班B",
+        "studentList": [
+            {
+                "number": 2,
+                "bigNumber": "2022402001",
+                "name": "张十一",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/liuzheng.jpg"
+            },
+            {
+                "number": 1,
+                "bigNumber": "2022402002",
+                "name": "李十二",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/10.1.25.198_01刘政.jpg"
+            },
+            {
+                "number": 3,
+                "bigNumber": "2022402003",
+                "name": "王十三",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/10.1.25.38_chr.jpg"
+            }
+        ]
+    },
+    {
+        "className": "其他班C",
+        "studentList": [
+            {
+                "number": 2,
+                "bigNumber": "2022403001",
+                "name": "张三一",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/liuzheng.jpg"
+            },
+            {
+                "number": 1,
+                "bigNumber": "2022403002",
+                "name": "李三二",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/10.1.25.198_01刘政.jpg"
+            },
+            {
+                "number": 3,
+                "bigNumber": "2022403003",
+                "name": "王三三",
+                "gendar": "男",
+                "phone": "",
+                "age": 17,
+                "money": 50,
+                "hobby": "爱好",
+                "dream": "梦想",
+                "icon": "img/10.1.25.38_chr.jpg"
+            }
+        ]
+    }
+]
